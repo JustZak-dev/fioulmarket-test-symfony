@@ -14,12 +14,12 @@ class FeedManagerService
         $this->processor = $processor;
     }
 
-    public function create(array $apiUrls)
+    public function create(array $apiUrls): array
     {
         $treatments = [];
 
-        foreach ($apiUrls as $apiUrl) {
-            $treatments[] = $this->processor->handleStream($apiUrl);
+        foreach ($apiUrls as $parser => $apiUrl) {
+            $treatments[] = $this->processor->handleStream($parser, $apiUrl);
         }
 
         return $treatments;

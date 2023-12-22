@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\FeedManager\Parser\Abstracts;
+namespace App\Service\FeedManager\ApiParser\Abstracts;
 
 use App\Service\FeedManager\Interfaces\ParserInterface;
 

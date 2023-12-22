@@ -17,29 +17,14 @@ class FeedProcessor implements FeedProcessorInterface
         $this->parserManager = $parserManager;
     }
 
-    public function handleStream(string $apiUrl)
+    public function handleStream($parser, string $apiUrl)
     {
         try {
             $response = $this->client->retrieve($apiUrl);
 
-            return $this->parserManager->handle($response);
+            return $this->parserManager->handle($parser, $response);
         } catch (\Throwable $exception) {
             throw new \Exception("handleStream is not working, {$exception->getMessage()}");
         }
-    }
-
-    private function format(string $content)
-    {
-
-    }
-
-    private function xmlParser(string $content)
-    {
-
-    }
-
-    private function jsonParser(string $content)
-    {
-
     }
 }

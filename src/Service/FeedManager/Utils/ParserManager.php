@@ -9,32 +9,9 @@ use App\Service\FeedManager\Parser\XMLParser;
 
 class ParserManager implements ParserManagerInterface
 {
-    private $parserFormats = [
-        XMLParser::class
-    ];
-
-    public function handle(string $content, bool $autoCheck = true, $format = XMLParser::class)
+    public function handle($parser, string $content)
     {
-        if (!$autoCheck) {
-            return $this->filterFormat(new $format($content)) ?? null;
-        }
-
-        return $this->autoCheck($content);
-    }
-
-    private function autoCheck(string $content)
-    {
-        $instance = null;
-
-        foreach ($this->parserFormats as $parserFormat) {
-            if (!$parseInstance = $this->filterFormat(new $parserFormat($content))) {
-                continue;
-            }
-
-            $instance = $parseInstance;
-        }
-
-        return $instance;
+        return $this->filterFormat(new $parser($content)) ?? null;
     }
 
     private function filterFormat($parseInstance)
@@ -44,17 +21,5 @@ class ParserManager implements ParserManagerInterface
         }
 
         return false;
-    }
-
-    public function getParserFormats(): array
-    {
-        return $this->parserFormats;
-    }
-
-    public function addParserFormats(string $parserFormats): self
-    {
-        $this->parserFormats[] = $parserFormats;
-
-        return $this;
     }
 }
